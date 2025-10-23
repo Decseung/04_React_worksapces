@@ -170,7 +170,7 @@
       // };
 
       // props 객체의 기본값 설정 2 - default parameter(기본 매개변수) 활성화
-      const NameCard = ({ name, phone }) => {
+      const NameCard = ({ name = "이름 없음", phone = "연락처 없음" }) => {
         return (
           <div
             style={{
@@ -183,10 +183,6 @@
             <div>전화번호: {phone}</div>
           </div>
         );
-      };
-      NameCard.defaultProps = {
-        name: "이름 없음",
-        phone: "연락처 없음",
       };
 
       ReactDOM.createRoot(document.querySelector("#root1")).render(<App />);
