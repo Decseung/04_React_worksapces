@@ -65,7 +65,7 @@
         function ChildComponent({ color, name }) {
           return <div style={{ color }}>{ name }</div>;
         }
-      2) defaultProps를 이용해 props가 전달되지 않았을 때 사용할 기본값을 설정할 수 있습니다.
+      2) defaultProps를 이용해 props가 전달되지 않았을 때 사용할 기본값을 설정할 수 있습니다. (권장 x)
         예시)
         ChildComponent.defaultProps = {
           color: "green",
@@ -190,12 +190,144 @@
     <hr />
 
     <div id="root2"></div>
-    <script type="text/babel"></script>
+    <script type="text/babel">
+      function App() {
+        return (
+          <>
+            <GiftCard brand="신세계">3만원</GiftCard>
+            <GiftCard brand="현대">
+              <em>5만원</em>
+            </GiftCard>
+          </>
+        );
+      }
+
+      // const GiftCard = (props) => {
+      //   // {brand: xxx, children: xxx}
+      //   return (
+      //     <h3>
+      //       {props.brand}백화점 - {props.children} 상품권
+      //     </h3>
+      //   );
+      // };
+
+      const GiftCard = ({ brand, children }) => {
+        // {brand: xxx, children: xxx}
+        return (
+          <h3>
+            {brand}백화점 - {children} 상품권
+          </h3>
+        );
+      };
+      ReactDOM.createRoot(document.querySelector("#root2")).render(<App />);
+    </script>
+    <hr />
+
+    <div id="root3"></div>
+    <script type="text/babel">
+      // props drilling
+      function App() {
+        return (
+          <div style={{ border: "1px solid black", padding: "10px" }}>
+            <h1> App Component</h1>
+            <FirstComp data="data by app" />
+          </div>
+        );
+      }
+
+      const FirstComp = ({ data }) => {
+        return (
+          <div style={{ border: "1px solid red", padding: "10px" }}>
+            <h2>First Child</h2>
+            <SecondComp data={data} />
+          </div>
+        );
+      };
+
+      const SecondComp = ({ data }) => {
+        return (
+          <div style={{ border: "1px solid blue", padding: "10px" }}>
+            <h3>Second Child</h3>
+            <ThirdComp data={data} />
+          </div>
+        );
+      };
+
+      const ThirdComp = ({ data }) => {
+        return (
+          <div style={{ border: "1px solid green", padding: "10px" }}>
+            <h4>Thrid Child</h4>
+            <em>최상위컴포넌트로부터 전달받은 데이터 : {data}</em>
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.querySelector("#root3")).render(<App />);
+    </script>
+
     <hr />
 
     <h1>연습</h1>
     <div id="root4"></div>
-    <script type="text/babel"></script>
+    <script type="text/babel">
+      function App() {
+        return (
+          <>
+            {/* 연습1) 아래와 같이 컴포넌트를 호출할 때 전달한 color를 배경색으로 가지도록 컴포넌트를 구현하세요. 박스크기(100*100) */}
+            <ColorBox color={"red"} />
+            {/* 연습2) 아래와 같이 컴포넌트를 호출할 때 전달한 data를 리스트 형태로 출력하도록 컴포넌트를 구현하세요. */}
+            <Items data={["봄", "여름", "가을", "겨울"]} />
+            {/* 연습3) 아래와 같이 컴포넌트를 호출할 때 전달한 friend 객체의 속성값을 출력하도록 컴포넌트를 구현하세요. */}
+            <Person friend={{ name: "jack", age: 20 }} />
+            {/* 연습4) 아래와 같이 컴포넌트를 호출할 때 내부 요소로 전달한 값을 정사각형의 너비로 계산하여 정사각형의 넓이를 출력하는 컴포넌트를 구현하세요. */}
+            <Square>5</Square>
+          </>
+        );
+      }
+
+      const ColorBox = ({ color }) => {
+        return (
+          <div
+            style={{
+              width: "100px",
+              height: "100px",
+              backgroundColor: `${color}`,
+            }}
+          ></div>
+        );
+      };
+
+      const Items = ({ data }) => {
+        return (
+          <ul>
+            {data.map((season) => {
+              return <li key={season}>{season}</li>;
+            })}
+          </ul>
+        );
+      };
+
+      // const Person = ({ friend }) => {
+      const Person = ({ friend: { name, age } }) => {
+        //중첩 객체 구조분해 할당 하는법
+        return (
+          <>
+            <div>이름: {name}</div>
+            <div>나이: {age}</div>
+          </>
+        );
+      };
+
+      const Square = ({ children }) => {
+        return (
+          <div style={{ width: `${children}px`, height: `${children}px` }}>
+            {children * children}
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.querySelector("#root4")).render(<App />);
+    </script>
 
     <hr />
 
@@ -210,11 +342,75 @@
   -->
 
     <div id="root5"></div>
-    <script type="text/babel"></script>
+    <script type="text/babel">
+      function App() {
+        const names = ["홍길동", "이순신", "강감찬"];
+        return (
+          <>
+            <NameListComp names={names} />
+          </>
+        );
+      }
+
+      const NameListComp = ({ names }) => {
+        return (
+          <ul>
+            {names.map((name, idx) => {
+              return <li key={idx}>{name}</li>;
+            })}
+          </ul>
+        );
+      };
+
+      ReactDOM.createRoot(document.querySelector("#root5")).render(<App />);
+    </script>
     <hr />
 
     <div id="root6"></div>
-    <script type="text/babel"></script>
+    <script type="text/babel">
+      function App() {
+        const cars = [
+          {
+            carNo: "123가1123",
+            model: "Volvo",
+          },
+          {
+            carNo: "123가1243",
+            model: "Benz",
+          },
+          {
+            carNo: "157가1354",
+            model: "Kia",
+          },
+        ];
+        return (
+          <>
+            <CarListComp cars={cars} />
+          </>
+        );
+      }
+
+      const CarListComp = ({ cars }) => {
+        return (
+          <div>
+            {cars.map((car, idx) => (
+              <CarItemComp key={idx} car={car} />
+            ))}
+          </div>
+        );
+      };
+
+      const CarItemComp = ({ car }) => {
+        return (
+          <div>
+            <h4>차 넘버 : {car.carNo}</h4>
+            <h4>차 브랜드 : {car.model}</h4>
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.querySelector("#root6")).render(<App />);
+    </script>
     <hr />
   </body>
 </html>
