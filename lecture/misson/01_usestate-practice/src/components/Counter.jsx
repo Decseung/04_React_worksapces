@@ -1,30 +1,28 @@
 import React, { useState } from "react";
 
-function counter() {
-  const [counter, setCounter] = useState(0);
+function Counter() {
+  const [count, setCount] = useState(0);
 
-  handleDecrease = () => {
-    setCounter((prev) => {
-      prev - 1;
-    });
+  const handleDecrease = () => {
+    setCount((prev) => prev - 1);
   };
 
-  handleIncrease = () => {
-    setCounter(counter + 1);
+  const handleIncrease = () => {
+    setCount(count + 1);
   };
 
-  handleReset = () => {
-    setCounter(0);
+  const handleReset = () => {
+    setCount(0);
   };
 
   return (
     <>
-      <div>카운트 :</div>
-      <button>-1</button>
-      <button>초기화</button>
-      <button>+1</button>
+      <div>카운트 : {count}</div>
+      <button onClick={handleDecrease}>-1</button>
+      <button onClick={handleReset}>초기화</button>
+      <button onClick={handleIncrease}>+1</button>
     </>
   );
 }
 
-export default counter;
+export default Counter;

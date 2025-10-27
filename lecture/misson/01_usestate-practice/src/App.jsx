@@ -1,10 +1,10 @@
-import Calculator from "./components/Calculator";
-import Counter from "./components/Counter";
+// import Calculator from "./components/Calculator";
+import Counter from "./components/counter";
 import Favorite from "./components/Favorite";
 import Hobby from "./components/Hobby";
-import Item from "./components/Item";
-import LoginForm from "./components/LoginForm";
-import Todos from "./components/Todos";
+// import Item from "./components/Item";
+// import LoginForm from "./components/LoginForm";
+// import Todos from "./components/Todos";
 import ToggleSwitch from "./components/ToggleSwitch";
 import UserInfo from "./components/UserInfo";
 // 01_01;
@@ -38,22 +38,22 @@ function App() {
 
       {/* 6) 할일(Todo) 컴포넌트 제작 */}
       <h2>할일 목록</h2>
-      <Todos />
+      {/* <Todos /> */}
       <hr />
 
       {/* 7) 계산기 컴포넌트 제작 */}
       <h2>간단한 계산기</h2>
-      <Calculator />
+      {/* <Calculator /> */}
       <hr />
 
       {/* 8) 아이템 선택 컴포넌트 제작 */}
       <h2>아이템 선택</h2>
-      <Item />
+      {/* <Item /> */}
       <hr />
 
       {/* 9) 로그인 폼 컴포넌트 제작 */}
       <h2>로그인 폼</h2>
-      <LoginForm />
+      {/* <LoginForm /> */}
       <hr />
     </>
   );
