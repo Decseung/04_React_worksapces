@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./CartItem.css";
+import { CartListContext } from "../../App";
 
-function CartItem({ cart, cartList, setCartList }) {
+function CartItem({ cart }) {
+  const { cartList, setCartList } = useContext(CartListContext);
+
   const deleteItem = () => {
     setCartList(cartList.filter((item) => item.id !== cart.id));
   };
@@ -18,7 +21,7 @@ function CartItem({ cart, cartList, setCartList }) {
   const handleMinus = () => {
     const UpdatePlus = cartList.map((item) => {
       return item.id === cart.id
-        ? { ...item, quantity: item.quantity - 1 }
+        ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
         : item;
     });
     setCartList(UpdatePlus);

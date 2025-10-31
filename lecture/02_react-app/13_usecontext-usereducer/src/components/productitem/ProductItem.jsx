@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ProductItem.css";
+import { CartListContext } from "../../App";
 
-function ProductItem({ data, cartList, setCartList }) {
+function ProductItem({ data }) {
+  const { cartList, setCartList } = useContext(CartListContext);
+
+  const existingItem = cartList.find((item) => item.id === data.id);
+
   const addCartList = () => {
-    if (!cartList.find((item) => item.id === data.id)) {
-      setCartList([...cartList, { ...data, quantity: 1 }]);
-    } else {
+    if (existingItem) {
       const updateItem = cartList.map((item) =>
         item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
       );
       setCartList(updateItem);
+    } else {
+      setCartList([...cartList, { ...data, quantity: 1 }]);
     }
   };
 

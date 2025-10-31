@@ -6,6 +6,7 @@ import { CartListContext } from "../../App";
 
 function ProductList() {
   const { cartList, setCartList } = useContext(CartListContext);
+
   return (
     <div>
       <h2>상품 목록</h2>
