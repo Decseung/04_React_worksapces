@@ -1,0 +1,21 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server 소개",
+      "author": "dev_senior"
+    },
+    {
+      "title": "axios 사용하기",
+      "author": "axios_user",
+      "id": "3"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "정말 유용하네요!",
+      "postId": 1
+    }
+  ]
+}
